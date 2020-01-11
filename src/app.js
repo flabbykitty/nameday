@@ -54,13 +54,41 @@ searchName.addEventListener("submit", e => {
     // Fetch from API
     getDate(name)
     .then(data => {
-        // Render to HTML
+        // Render the result from the API to HTML
         renderDateOfName(data, name);
     });
 });
 
 
 
+// Search date
 
+let searchDate = document.querySelector(".form-date");
 
-// Get value from search input (date)
+const renderNameOnDate = data => {
+    console.log(data);
+
+    let name = data.data[0].namedays.se;
+    
+    document.querySelector(".display-name").innerHTML = `<p>${name} has nameday this day! Celebrate them!</p>`
+};
+
+searchDate.addEventListener("submit", e => {
+    e.preventDefault();
+
+    // Get value (month and day) from input ex.("2020-01-01")
+    // Split the result into an array, splitting where the "-" is
+    // Getting the month and the day from index 1 and 2 of the array
+    // Casting the strings in to numbers, because the API does not want zeros in the beginning of a number.
+    let date = e.target.dateInput.value;
+    date = date.split("-");
+    let month = Number(date[1]);
+    let day = Number(date[2]);
+
+    // Fetch from API
+    getName(month, day)
+    .then(data => {
+        // Render the result from the API to HTML
+        renderNameOnDate(data);
+    });
+});
