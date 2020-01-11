@@ -11,6 +11,37 @@
     <title>Nameday</title>
 </head>
 <body>
+
+    <div class="container m-auto">
+            <h1>Nameday</h1>
+            <div class="row">
+                <div class="name col-sm-12 col-md-6">
+                    <h2>Search name</h2>
+                    <form class="input-group form-name my-3">
+                        <input type="text" id="nameInput" class="form-control" placeholder="Search name" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-light btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                        </div>
+                    </form>
+    
+                    <div class="display-date"></div>
+                </div>
+        
+                <div class="date col-sm-12 col-md-6">
+                    <h2>Search date</h2>
+                    <form class="input-group form-date my-3">
+                        <input type="date" id="dateInput" class="form-control" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-light btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                        </div>
+                    </form>
+    
+                    <div class="display-name"></div>
+                </div>
+            </div>
+        </div>
+
+
     <script src="src/fetch.js"></script>
     <script src="src/app.js"></script>
 </body>
