@@ -15,27 +15,67 @@
 let searchName = document.querySelector(".form-name");
 
 // Rendering the result to HTML
+// WELCOME TO MY MONSTER FUNCTION! IT WILL EAT YOU UP AND SPIT YOU OUT!
+
 const renderDateOfName = (data, name) => {
     console.log(data.results);
 
     let displayDate = document.querySelector(".display-date");
-
+    
     // If array length in data.results < 1, print not success.
-    // If array is > 1, find the matching name with higher order array method find().
+    // If array is >= 1, loop through array
+    // If the result in the current iteration is the same as name, date = result
+    // Else if it is not the same, find the result where there is more than one name
+    // If name match, date = result of find
     // If there is a match and date is then true, print success, else if date is false, print not success.
     // Else if the array === 1, print success.
 
+    let date = null;
+
     if(data.results.length < 1) {
         displayDate.innerHTML = `<p>Sorry, ${name} does not have a nameday :(</p>`;
-    } else if(data.results.length > 1) {
-        let date = data.results.find(result => result.name === name);
+    } else if(data.results.length >= 1) {
+        data.results.forEach(result => {
+            if(result.name === name) {
+                date = result;
+            } else {
+                date = data.results.find(result => {
+                    if(result.name.indexOf(",") > 1) {
+                        let res = result.name
+                        .split(", ")
+                        .find(result => result === name);
+                        if(res === name) {
+                            return result;
+                        }
+                    }
+                });
+            }
+        });
+
         if(date) {
             displayDate.innerHTML = `<p>${name} has nameday on ${date.day}/${date.month}</p>`;
         } else {
             displayDate.innerHTML = `<p>Sorry, ${name} does not have a nameday :(</p>`;
         }
-    } else {
-        displayDate.innerHTML = `<p>${name} has nameday on ${data.results[0].day}/${data.results[0].month}</p>`;
+    }
+
+    // Get the names that also has nameday on the date that the searched name has
+    if(date) {
+        getName(date.month, date.day)
+        .then(data => {
+            // Take the name that has nameday the same day as the name searched on.
+            // Make an array out of the names, filter so that only the ones that are not the name searched on remains, and then join back into a new fancy array. Boom.
+            if(data.data[0].namedays.se.length !== name.length) {
+                let names = data.data[0].namedays.se
+                .split(", ")
+                .filter(item => item !== name)
+                .join(", ");
+        
+                displayDate.innerHTML += `<p>Other people that also have nameday on this day are: <br>${names}.</p>`
+            } else {
+                displayDate.innerHTML += `<p>Only this person has nameday on this day.</p>`
+            }
+        });
     }
 };
 
@@ -76,7 +116,7 @@ const renderNameOnDate = data => {
 searchDate.addEventListener("submit", e => {
     e.preventDefault();
 
-    // Get value (month and day) from input ex.("2020-01-01")
+    // Get value from input ex.("2020-01-01")
     // Split the result into an array, splitting where the "-" is
     // Getting the month and the day from index 1 and 2 of the array
     // Casting the strings in to numbers, because the API does not want zeros in the beginning of a number.
