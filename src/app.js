@@ -35,9 +35,10 @@ const renderDateOfName = (data, name) => {
     if(data.results.length < 1) {
         displayDate.innerHTML = `<p>Sorry, ${name} does not have a nameday :(</p>`;
     } else if(data.results.length >= 1) {
-        data.results.forEach(result => {
-            if(result.name === name) {
-                date = result;
+        for(let i = 0; i < data.results.length; i++) {
+            if(data.results[i].name === name) {
+                date = data.results[i];
+                i = data.results.length + 1;
             } else {
                 date = data.results.find(result => {
                     if(result.name.indexOf(",") > 1) {
@@ -50,7 +51,7 @@ const renderDateOfName = (data, name) => {
                     }
                 });
             }
-        });
+        }
 
         if(date) {
             displayDate.innerHTML = `<p>${name} has nameday on ${date.day}/${date.month}</p>`;
@@ -71,7 +72,7 @@ const renderDateOfName = (data, name) => {
                 .filter(item => item !== name)
                 .join(", ");
         
-                displayDate.innerHTML += `<p>Other people that also have nameday on this day are: <br>${names}.</p>`
+                displayDate.innerHTML += `<p>Other people that also have nameday on this day are:</p><p>${names}</p>`
             } else {
                 displayDate.innerHTML += `<p>Only this person has nameday on this day.</p>`
             }
