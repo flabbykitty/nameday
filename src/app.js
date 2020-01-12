@@ -9,15 +9,15 @@
  */
 
 
-// Search name
-
-// Get reference to the form for searching on a name
 let searchName = document.querySelector(".form-name");
+let searchDate = document.querySelector(".form-date");
+
+// Search name
 
 // Rendering the result to HTML
 // WELCOME TO MY MONSTER FUNCTION! IT WILL EAT YOU UP AND SPIT YOU OUT!
 
-const renderDateOfName = (data, name) => {
+const renderDateOfName = (data, name, country) => {
     console.log(data.results);
 
     let displayDate = document.querySelector(".display-date");
@@ -54,7 +54,7 @@ const renderDateOfName = (data, name) => {
         }
 
         if(date) {
-            displayDate.innerHTML = `<p>${name} has nameday on ${date.day}/${date.month}</p>`;
+            displayDate.innerHTML = `<p>${name} has nameday on ${date.day}/${date.month}.</p>`;
         } else {
             displayDate.innerHTML = `<p>Sorry, ${name} does not have a nameday :(</p>`;
         }
@@ -62,12 +62,12 @@ const renderDateOfName = (data, name) => {
 
     // Get the names that also has nameday on the date that the searched name has
     if(date) {
-        getName(date.month, date.day)
+        getName(date.month, date.day, country)
         .then(data => {
             // Take the name that has nameday the same day as the name searched on.
             // Make an array out of the names, filter so that only the ones that are not the name searched on remains, and then join back into a new fancy array. Boom.
-            if(data.data[0].namedays.se.length !== name.length) {
-                let names = data.data[0].namedays.se
+            if(data.data[0].namedays[country].length !== name.length) {
+                let names = data.data[0].namedays[country]
                 .split(", ")
                 .filter(item => item !== name)
                 .join(", ");
@@ -83,6 +83,8 @@ const renderDateOfName = (data, name) => {
 
 searchName.addEventListener("submit", e => {
     e.preventDefault();
+
+    let country = document.querySelector(".country").value;
     
     // Get value from input
     // Turn it into lowercase
@@ -93,10 +95,10 @@ searchName.addEventListener("submit", e => {
     name = name[0].toUpperCase() + name.slice(1);
 
     // Fetch from API
-    getDate(name)
+    getDate(name, country)
     .then(data => {
         // Render the result from the API to HTML
-        renderDateOfName(data, name);
+        renderDateOfName(data, name, country);
     });
 });
 
@@ -104,18 +106,19 @@ searchName.addEventListener("submit", e => {
 
 // Search date
 
-let searchDate = document.querySelector(".form-date");
-
-const renderNameOnDate = data => {
+const renderNameOnDate = (data, country) => {
     console.log(data);
 
-    let name = data.data[0].namedays.se;
+    let name = data.data[0].namedays[country];
     
     document.querySelector(".display-name").innerHTML = `<p>${name} has nameday this day! Celebrate them!</p>`
 };
 
+
 searchDate.addEventListener("submit", e => {
     e.preventDefault();
+
+    let country = document.querySelector(".country").value;
 
     // Get value from input ex.("2020-01-01")
     // Split the result into an array, splitting where the "-" is
@@ -127,9 +130,9 @@ searchDate.addEventListener("submit", e => {
     let day = Number(date[2]);
 
     // Fetch from API
-    getName(month, day)
+    getName(month, day, country)
     .then(data => {
         // Render the result from the API to HTML
-        renderNameOnDate(data);
+        renderNameOnDate(data, country);
     });
 });
