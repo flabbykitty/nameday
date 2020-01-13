@@ -12,10 +12,27 @@
 </head>
 <body>
 
-    <div class="container m-auto">
-            <h1>Nameday</h1>
-            <div class="row">
-                <div class="name col-sm-12 col-md-6">
+    <div class="container m-auto text-center">
+            <h1 class="mb-5 mt-4">Namedays in 
+                    <select class="form-control country">
+                        <option value="se">Sweden</option>
+                        <option value="at">Austria</option>
+                        <option value="hr">Croatia</option>
+                        <option value="cz">Czech Republic</option>
+                        <option value="dk">Denmark</option>
+                        <option value="fi">Finland</option>
+                        <option value="fr">France</option>
+                        <option value="de">Germany</option>
+                        <option value="hu">Hungary</option>
+                        <option value="it">Italy</option>
+                        <option value="pl">Poland</option>
+                        <option value="sk">Slovakia</option>
+                        <option value="es">Spain</option>
+                        <option value="us">United States</option>
+                    </select>
+                </h1>
+            <div class="row justify-content-around">
+                <div id="name" class="col-sm-12 col-md-5 rounded-lg">
                     <h2>Search name</h2>
                     <form class="input-group form-name my-3">
                         <input type="text" id="nameInput" class="form-control" placeholder="Search name" aria-describedby="button-addon2">
@@ -23,11 +40,19 @@
                             <button class="btn btn-light btn-outline-secondary" type="submit" id="button-addon2">Search</button>
                         </div>
                     </form>
+
+                    <div class="display-date">
+                        <p class="name">Name</p>
+                        <p class="date">Date</p>
+                        <p class="other-names">Other names</p>
+                    </div>
     
-                    <div class="display-date"></div>
+                    <!-- <div class="display-date text-left">
+                        <p>Search on a name and I will tell you what date that name has nameday, and also if there are any other names that has a nameday that day</p>
+                    </div> -->
                 </div>
         
-                <div class="date col-sm-12 col-md-6">
+                <div id="date" class="col-sm-12 col-md-5 rounded-lg mt-4 mt-md-0">
                     <h2>Search date</h2>
                     <form class="input-group form-date my-3">
                         <input type="date" id="dateInput" class="form-control" aria-describedby="button-addon2">
@@ -36,7 +61,9 @@
                         </div>
                     </form>
     
-                    <div class="display-name"></div>
+                    <div class="display-name text-left">
+                        <p>Search on a date, and I will tell you what names has nameday that day</p>
+                    </div>
                 </div>
             </div>
         </div>
