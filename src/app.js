@@ -11,6 +11,7 @@
 
 let searchName = document.querySelector(".form-name");
 let searchDate = document.querySelector(".form-date");
+let searchDay = document.querySelector(".day-buttons");
 
 // Search name
 
@@ -20,6 +21,10 @@ let searchDate = document.querySelector(".form-date");
 const renderDateOfName = (data, name, country) => {
     console.log(data.results);
     
+    document.querySelector(".name").innerHTML = "";
+    document.querySelector(".date").innerHTML = "";
+    document.querySelector(".other-names").innerHTML = "";
+
     // If array length in data.results < 1, print not success.
     // If array is >= 1, loop through array
     // If the result in the current iteration is the same as name, date = result
@@ -32,8 +37,6 @@ const renderDateOfName = (data, name, country) => {
 
     if(data.results.length < 1) {
         document.querySelector(".name").innerHTML = `Sorry, ${name} does not have a nameday :(`;
-        document.querySelector(".date").innerHTML = "";
-        document.querySelector(".other-names").innerHTML = "";
     } else if(data.results.length >= 1) {
         for(let i = 0; i < data.results.length; i++) {
             if(data.results[i].name === name) {
@@ -54,11 +57,10 @@ const renderDateOfName = (data, name, country) => {
         }
 
         if(date) {
-            // displayDate.innerHTML = `<p>${name} has nameday on ${date.day}/${date.month}.</p>`;
             document.querySelector(".name").innerHTML = name;
             document.querySelector(".date").innerHTML = `${date.day}/${date.month}`;
         } else {
-            document.querySelector(".names").innerHTML = `Sorry, ${name} does not have a nameday :(`;
+            document.querySelector(".name").innerHTML = `Sorry, ${name} does not have a nameday :(`;
         }
     }
 
@@ -73,11 +75,9 @@ const renderDateOfName = (data, name, country) => {
                 .split(", ")
                 .filter(item => item !== name)
                 .join(", ");
-        
-                // displayDate.innerHTML += `<p>Other people that also have nameday on this day are:</p><p>${names}</p>`;
+
                 document.querySelector(".other-names").innerHTML = names;
             } else {
-                // displayDate.innerHTML += `<p>Only this person has nameday on this day.</p>`;
                 document.querySelector(".other-names").innerHTML = "Only this person has nameday on this day.";
             }
         });
@@ -115,7 +115,13 @@ const renderNameOnDate = (data, country) => {
 
     let name = data.data[0].namedays[country];
     
-    document.querySelector(".display-name").innerHTML = `<p>${name} has nameday this day! Celebrate them!</p>`
+    document.querySelector(".name").innerHTML = "";
+    document.querySelector(".date").innerHTML = "";
+    document.querySelector(".other-names").innerHTML = "";
+
+    document.querySelector(".name").innerHTML = name;
+    document.querySelector(".date").innerHTML = `${data.data[0].dates.day}/${data.data[0].dates.month}`
+
 };
 
 
@@ -138,5 +144,31 @@ searchDate.addEventListener("submit", e => {
     .then(data => {
         // Render the result from the API to HTML
         renderNameOnDate(data, country);
+    });
+});
+
+// Search day 
+
+const renderNameOnDay = (data, country) => {
+    console.log(data);
+
+    document.querySelector(".name").innerHTML = "";
+    document.querySelector(".date").innerHTML = "";
+    document.querySelector(".other-names").innerHTML = "";
+
+    document.querySelector(".name").innerHTML = data.data[0].namedays[country];
+    document.querySelector(".date").innerHTML = `${data.data[0].dates.day}/${data.data[0].dates.month}`;
+    document.querySelector(".other-names").innerHTML = "";
+
+};
+
+searchDay.addEventListener("click", e => {
+    let day = e.target.id;
+    let timezone = "";
+    let country = document.querySelector(".country").value;
+
+    getNameOnDay(day, country)
+    .then(data => {
+        renderNameOnDay(data, country);
     });
 });
