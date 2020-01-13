@@ -19,8 +19,6 @@ let searchDate = document.querySelector(".form-date");
 
 const renderDateOfName = (data, name, country) => {
     console.log(data.results);
-
-    let displayDate = document.querySelector(".display-date");
     
     // If array length in data.results < 1, print not success.
     // If array is >= 1, loop through array
@@ -33,7 +31,9 @@ const renderDateOfName = (data, name, country) => {
     let date = null;
 
     if(data.results.length < 1) {
-        displayDate.innerHTML = `<p>Sorry, ${name} does not have a nameday :(</p>`;
+        document.querySelector(".name").innerHTML = `Sorry, ${name} does not have a nameday :(`;
+        document.querySelector(".date").innerHTML = "";
+        document.querySelector(".other-names").innerHTML = "";
     } else if(data.results.length >= 1) {
         for(let i = 0; i < data.results.length; i++) {
             if(data.results[i].name === name) {
@@ -54,9 +54,11 @@ const renderDateOfName = (data, name, country) => {
         }
 
         if(date) {
-            displayDate.innerHTML = `<p>${name} has nameday on ${date.day}/${date.month}.</p>`;
+            // displayDate.innerHTML = `<p>${name} has nameday on ${date.day}/${date.month}.</p>`;
+            document.querySelector(".name").innerHTML = name;
+            document.querySelector(".date").innerHTML = `${date.day}/${date.month}`;
         } else {
-            displayDate.innerHTML = `<p>Sorry, ${name} does not have a nameday :(</p>`;
+            document.querySelector(".names").innerHTML = `Sorry, ${name} does not have a nameday :(`;
         }
     }
 
@@ -72,9 +74,11 @@ const renderDateOfName = (data, name, country) => {
                 .filter(item => item !== name)
                 .join(", ");
         
-                displayDate.innerHTML += `<p>Other people that also have nameday on this day are:</p><p>${names}</p>`
+                // displayDate.innerHTML += `<p>Other people that also have nameday on this day are:</p><p>${names}</p>`;
+                document.querySelector(".other-names").innerHTML = names;
             } else {
-                displayDate.innerHTML += `<p>Only this person has nameday on this day.</p>`
+                // displayDate.innerHTML += `<p>Only this person has nameday on this day.</p>`;
+                document.querySelector(".other-names").innerHTML = "Only this person has nameday on this day.";
             }
         });
     }
