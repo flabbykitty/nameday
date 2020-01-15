@@ -23,6 +23,17 @@ const renderListOfTimezones = async (data) => {
 };
 
 
+const checkCountryAndTimezone = (country, timezone) => {
+    if(!country || !timezone) {
+        document.querySelector(".display").innerHTML = `
+        <div class="alert alert-warning">Please choose both country and timezone.</div>`;
+        return false;
+    } else {
+        return true;
+    }
+};
+
+
 // Displaying results depending on what result we get back
 const displayResult = (day, month, name, names) => {
     let div = document.createElement("DIV");
@@ -49,8 +60,6 @@ const displayResult = (day, month, name, names) => {
 
 
 const renderDateOfName = (data, name, country) => {
-    // console.log("data", data);
-    // console.log("data.results", data.results);
     document.querySelector(".display").innerHTML = "";
 
     let date = null;
@@ -140,11 +149,13 @@ searchDay.addEventListener("click", e => {
     let day = e.target.id;
     let timezone = document.querySelector(".timezones").value;
     let country = document.querySelector(".country").value;
-    
-    getNameOnDay(day, country, timezone)
-    .then(data => {
-        renderNameOnDay(data, country);
-    });
+
+    if(checkCountryAndTimezone(country, timezone)) {
+        getNameOnDay(day, country, timezone)
+        .then(data => {
+            renderNameOnDay(data, country);
+        });
+    }
 });
 
 
@@ -158,13 +169,15 @@ searchName.addEventListener("submit", e => {
     let name = e.target.nameInput.value;
     name = name.toLowerCase().trim();
     name = name[0].toUpperCase() + name.slice(1);
-    
-    // Fetch from API
-    getDate(name, country, timezone)
-    .then(data => {
-        // Render the result from the API to HTML
-        renderDateOfName(data, name, country);
-    });
+
+    if(checkCountryAndTimezone(country, timezone)) {
+        // Fetch from API
+        getDate(name, country, timezone)
+        .then(data => {
+            // Render the result from the API to HTML
+            renderDateOfName(data, name, country);
+        });
+    }
 });
 
 
@@ -180,10 +193,12 @@ searchDate.addEventListener("submit", e => {
     let month = Number(date[1]);
     let day = Number(date[2]);
 
-    // Fetch from API
-    getName(month, day, country, timezone)
-    .then(data => {
-        // Render the result from the API to HTML
-        renderNameOnDate(data, country);
-    });
+    if(checkCountryAndTimezone(country, timezone)) {
+        // Fetch from API
+        getName(month, day, country, timezone)
+        .then(data => {
+            // Render the result from the API to HTML
+            renderNameOnDate(data, country);
+        });
+    }
 });
