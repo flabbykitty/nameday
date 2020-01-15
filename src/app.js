@@ -4,7 +4,7 @@
  * Search on name to get what date
  * Search on date to get what name(s)
  * 
- * Search on country
+ * Search on country and timezone
  * 
  */
 
@@ -14,37 +14,67 @@ let searchDate = document.querySelector(".form-date");
 let searchDay = document.querySelector(".day-buttons");
 
 
+// Add options of timezones to select.
 const renderListOfTimezones = async (data) => {
     let select = document.querySelector(".timezones");
     data.forEach(zone => {
         select.innerHTML += `<option>${zone.zone}</option>`
-    })
+    });
+};
+
+
+// Displaying results depending on what result we get back
+const displayResult = (day, month, name, names) => {
+    let div = document.createElement("DIV");
+    document.querySelector(".display").append(div);
+
+    if(day) {
+        div.innerHTML += `<p class="date">${day}/${month}</p>`;
+    }
+
+    if(name) {
+        if(!day) {
+            div.innerHTML += `<p class="name">Sorry, ${name} does not have a nameday</p>`
+        } else {
+            div.innerHTML += `<p class="name">${name}</p>`;
+        }
+    }
+
+    if(names) {
+        div.innerHTML += `<p class="other-names">${names}</p>`;
+    }
 
 }
 
 
 
 const renderDateOfName = (data, name, country) => {
-    console.log(data.results);
-    
-    document.querySelector(".name").innerHTML = "";
-    document.querySelector(".date").innerHTML = "";
-    document.querySelector(".other-names").innerHTML = "";
+    // console.log("data", data);
+    // console.log("data.results", data.results);
+    document.querySelector(".display").innerHTML = "";
 
     let date = null;
 
+    // If there is less then 1 item in array, there is no result, and no name
     if(data.results.length < 1) {
-        document.querySelector(".name").innerHTML = `Sorry, ${name} does not have a nameday :(`;
+        displayResult(null, null, name, null);
+    // If there is 1 or more item in array, I have to find the right one.
     } else if(data.results.length >= 1) {
+        // For each item in the array, check if the current item is the same as the searched name
+        // And then save that info in variable date.
         for(let i = 0; i < data.results.length; i++) {
             if(data.results[i].name === name) {
                 date = data.results[i];
                 i = data.results.length + 1;
+            // If no name exactly match, I have to check if there are more than one name, and maybe it's among them.
             } else {
-                date = data.results.find(result => {
+                date = data.results.filter(result => {
+                    // Find the result where there is a comma to seperate two or more names.
                     if(result.name.indexOf(",") > 1) {
+                        // Split the string at the commas, and make an array
                         let res = result.name
                         .split(", ")
+                        // Find in the array where the searched name match
                         .find(result => result === name);
                         if(res === name) {
                             return result;
@@ -53,61 +83,47 @@ const renderDateOfName = (data, name, country) => {
                 });
             }
         }
-
-        if(date) {
-            document.querySelector(".name").innerHTML = name;
-            document.querySelector(".date").innerHTML = `${date.day}/${date.month}`;
-        } else {
-            document.querySelector(".name").innerHTML = `Sorry, ${name} does not have a nameday :(`;
-        }
     }
 
-    // Get the names that also has nameday on the date that the searched name has
     if(date) {
-        getName(date.month, date.day, country)
-        .then(data => {
-            if(data.data[0].namedays[country].length !== name.length) {
-                let names = data.data[0].namedays[country]
-                .split(", ")
-                .filter(item => item !== name)
-                .join(", ");
+        let names = "";
+            // If there are more then one name
+        if(date[0]) {
+            // Get the names that has the same nameday
+            date.forEach(result => {
+                getName(result.month, result.day, country)
+                .then(data => {
+                    if(data.data[0].namedays[country].length !== name.length) {
+                        names = data.data[0].namedays[country]
+                        .split(", ")
+                        .filter(item => item !== name)
+                        .join(", ");
 
-                document.querySelector(".other-names").innerHTML = names;
-            }
-        });
+                        displayResult(result.day, result.month, name, names);
+                    }
+                });
+            });
+        // If there is only one name
+        } else {
+            displayResult(date.day, date.month, name, names);
+        }
     }
 };
 
 
 
 const renderNameOnDate = (data, country) => {
-    console.log(data);
-
-    let name = data.data[0].namedays[country];
-    
-    document.querySelector(".name").innerHTML = "";
-    document.querySelector(".date").innerHTML = "";
-    document.querySelector(".other-names").innerHTML = "";
-    
-    document.querySelector(".name").innerHTML = name;
-    document.querySelector(".date").innerHTML = `${data.data[0].dates.day}/${data.data[0].dates.month}`
-    
+    document.querySelector(".display").innerHTML = "";
+    displayResult(data.data[0].dates.day, data.data[0].dates.month, data.data[0].namedays[country], null);    
 };
 
 
 
 const renderNameOnDay = (data, country) => {
-    console.log(data);
-    
-    document.querySelector(".name").innerHTML = "";
-    document.querySelector(".date").innerHTML = "";
-    document.querySelector(".other-names").innerHTML = "";
-    
-    document.querySelector(".name").innerHTML = data.data[0].namedays[country];
-    document.querySelector(".date").innerHTML = `${data.data[0].dates.day}/${data.data[0].dates.month}`;
-    document.querySelector(".other-names").innerHTML = "";
-
+    document.querySelector(".display").innerHTML = "";
+    displayResult(data.data[0].dates.day, data.data[0].dates.month, data.data[0].namedays[country], null);
 };
+
 
 
 getJSON("src/zone.json")
@@ -131,6 +147,8 @@ searchDay.addEventListener("click", e => {
     });
 });
 
+
+
 searchName.addEventListener("submit", e => {
     e.preventDefault();
 
@@ -138,7 +156,7 @@ searchName.addEventListener("submit", e => {
     let country = document.querySelector(".country").value;
     
     let name = e.target.nameInput.value;
-    name = name.toLowerCase();
+    name = name.toLowerCase().trim();
     name = name[0].toUpperCase() + name.slice(1);
     
     // Fetch from API
@@ -148,6 +166,8 @@ searchName.addEventListener("submit", e => {
         renderDateOfName(data, name, country);
     });
 });
+
+
 
 searchDate.addEventListener("submit", e => {
     e.preventDefault();
