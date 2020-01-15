@@ -1,0 +1,170 @@
+[
+    {
+        "country": "DE",
+        "zone": "Europe/Busingen"
+    },
+    {
+        "country": "DK",
+        "zone": "Europe/Copenhagen"
+    },
+    {
+        "country": "ES",
+        "zone": "Europe/Madrid"
+    },
+    {
+        "country": "ES",
+        "zone": "Africa/Ceuta"
+    },
+    {
+        "country": "ES",
+        "zone": "Atlantic/Canary"
+    },
+    {
+        "country": "FI",
+        "zone": "Europe/Helsinki"
+    },
+    {
+        "country": "FR",
+        "zone": "Europe/Paris"
+    },
+    {
+        "country": "HR",
+        "zone": "Europe/Zagreb"
+    },
+    {
+        "country": "HU",
+        "zone": "Europe/Budapest"
+    },
+    {
+        "country": "IT",
+        "zone": "Europe/Rome"
+    },
+    {
+        "country": "PL",
+        "zone": "Europe/Warsaw"
+    },
+    {
+        "country": "SE",
+        "zone": "Europe/Stockholm"
+    },
+    {
+        "country": "SK",
+        "zone": "Europe/Bratislava"
+    },
+    {
+        "country": "US",
+        "zone": "America/New_York"
+    },
+    {
+        "country": "US",
+        "zone": "America/Detroit"
+    },
+    {
+        "country": "US",
+        "zone": "America/Kentucky/Louisville"
+    },
+    {
+        "country": "US",
+        "zone": "America/Kentucky/Monticello"
+    },
+    {
+        "country": "US",
+        "zone": "America/Indiana/Indianapolis"
+    },
+    {
+        "country": "US",
+        "zone": "America/Indiana/Vincennes"
+    },
+    {
+        "country": "US",
+        "zone": "America/Indiana/Winamac"
+    },
+    {
+        "country": "US",
+        "zone": "America/Indiana/Marengo"
+    },
+    {
+        "country": "US",
+        "zone": "America/Indiana/Petersburg"
+    },
+    {
+        "country": "US",
+        "zone": "America/Indiana/Vevay"
+    },
+    {
+        "country": "US",
+        "zone": "America/Chicago"
+    },
+    {
+        "country": "US",
+        "zone": "America/Indiana/Tell_City"
+    },
+    {
+        "country": "US",
+        "zone": "America/Indiana/Knox"
+    },
+    {
+        "country": "US",
+        "zone": "America/Menominee"
+    },
+    {
+        "country": "US",
+        "zone": "America/North_Dakota/Center"
+    },
+    {
+        "country": "US",
+        "zone": "America/North_Dakota/New_Salem"
+    },
+    {
+        "country": "US",
+        "zone": "America/North_Dakota/Beulah"
+    },
+    {
+        "country": "US",
+        "zone": "America/Denver"
+    },
+    {
+        "country": "US",
+        "zone": "America/Boise"
+    },
+    {
+        "country": "US",
+        "zone": "America/Phoenix"
+    },
+    {
+        "country": "US",
+        "zone": "America/Los_Angeles"
+    },
+    {
+        "country": "US",
+        "zone": "America/Anchorage"
+    },
+    {
+        "country": "US",
+        "zone": "America/Juneau"
+    },
+    {
+        "country": "US",
+        "zone": "America/Sitka"
+    },
+    {
+        "country": "US",
+        "zone": "America/Metlakatla"
+    },
+    {
+        "country": "US",
+        "zone": "America/Yakutat"
+    },
+    {
+        "country": "US",
+        "zone": "America/Nome"
+    },
+    {
+        "country": "US",
+        "zone": "America/Adak"
+    },
+    {
+        "country": "US",
+        "zone": "Pacific/Honolulu"
+    }
+]
