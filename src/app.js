@@ -37,6 +37,7 @@ const checkCountryAndTimezone = (country, timezone) => {
 // Displaying results depending on what result we get back
 const displayResult = (day, month, name, names) => {
     let div = document.createElement("DIV");
+    div.classList.add("w-50");
     document.querySelector(".display").append(div);
 
     if(day) {
