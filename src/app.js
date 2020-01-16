@@ -74,8 +74,7 @@ const displayResult = (day, month, name, names) => {
     if(names) {
         div.innerHTML += `<p class="other-names">${names}</p>`;
     }
-
-}
+};
 
 
 // Handle the results of searching on a name
