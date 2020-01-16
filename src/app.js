@@ -178,6 +178,7 @@ searchName.addEventListener("submit", e => {
     let country = document.querySelector(".country").value;
     
     let name = e.target.nameInput.value;
+    e.target.nameInput.value = "";
 
     if(!name) {
         document.querySelector(".display").innerHTML = `
@@ -211,6 +212,7 @@ searchDate.addEventListener("submit", e => {
     let country = document.querySelector(".country").value;
     
     let date = e.target.dateInput.value;
+    e.target.dateInput.value = "";
 
     if(!date) {
         document.querySelector(".display").innerHTML = `
