@@ -32,6 +32,16 @@ const renderListOfTimezones = async (data) => {
     });
 };
 
+
+// Add options of countries to select tag.
+const renderListOfCountries = async (data) => {
+    let select = document.querySelector(".countries");
+    data.forEach(country => {
+        select.innerHTML += `<option value="${country.code}">${country.country}</option>`
+    });
+};
+
+
 // Check if country and timezone is chosen
 const checkCountryAndTimezone = (country, timezone) => {
     if(!country || !timezone) {
@@ -174,6 +184,18 @@ getJSON("src/zone.json")
     });
 
 
+// Fetch countries from json file
+getJSON("src/country.json")
+.then(data => {
+    renderListOfCountries(data);
+})
+.catch((err) => {
+    console.error(err);
+    let select = document.querySelector(".countries");
+    select.innerHTML += `<option>Unable to get countries</option>`
+});
+
+
 
 /**
  * Event listeners
@@ -183,7 +205,7 @@ getJSON("src/zone.json")
 searchDay.addEventListener("click", e => {
     let day = e.target.id;
     let timezone = document.querySelector(".timezones").value;
-    let country = document.querySelector(".country").value;
+    let country = document.querySelector(".countries").value;
 
     if(checkCountryAndTimezone(country, timezone)) {
         getNameOnDay(day, country, timezone)
@@ -203,7 +225,7 @@ searchName.addEventListener("submit", e => {
     e.preventDefault();
 
     let timezone = document.querySelector(".timezones").value;
-    let country = document.querySelector(".country").value;
+    let country = document.querySelector(".countries").value;
     
     let name = e.target.nameInput.value;
     e.target.nameInput.value = "";
@@ -235,7 +257,7 @@ searchDate.addEventListener("submit", e => {
     e.preventDefault();
 
     let timezone = document.querySelector(".timezones").value;
-    let country = document.querySelector(".country").value;
+    let country = document.querySelector(".countries").value;
     
     let date = e.target.dateInput.value;
     e.target.dateInput.value = "";

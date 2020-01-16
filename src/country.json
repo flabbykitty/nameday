@@ -1,0 +1,58 @@
+[
+    {
+        "code": "se",
+        "country": "Sweden"
+    },
+    {
+        "code": "at",
+        "country": "Austria"
+    },
+    {
+        "code": "hr",
+        "country": "Croatia"
+    },
+    {
+        "code": "cz",
+        "country": "Czech Republic"
+    },
+    {
+        "code": "dk",
+        "country": "Denmark"
+    },
+    {
+        "code": "fi",
+        "country": "Finland"
+    },
+    {
+        "code": "fr",
+        "country": "France"
+    },
+    {
+        "code": "de",
+        "country": "Germany"
+    },
+    {
+        "code": "hu",
+        "country": "Hungary"
+    },
+    {
+        "code": "it",
+        "country": "Italy"
+    },
+    {
+        "code": "pl",
+        "country": "Poland"
+    },
+    {
+        "code": "sk",
+        "country": "Slovakia"
+    },
+    {
+        "code": "es",
+        "country": "Spain"
+    },
+    {
+        "code": "us",
+        "country": "United States"
+    }
+]
