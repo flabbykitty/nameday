@@ -12,61 +12,64 @@
 </head>
 <body>
 
-    <div class="container m-auto text-center">
-            <h1 class="mb-5 mt-4">Namedays in 
-                    <select class="form-control country">
-                        <option value="se">Sweden</option>
-                        <option value="at">Austria</option>
-                        <option value="hr">Croatia</option>
-                        <option value="cz">Czech Republic</option>
-                        <option value="dk">Denmark</option>
-                        <option value="fi">Finland</option>
-                        <option value="fr">France</option>
-                        <option value="de">Germany</option>
-                        <option value="hu">Hungary</option>
-                        <option value="it">Italy</option>
-                        <option value="pl">Poland</option>
-                        <option value="sk">Slovakia</option>
-                        <option value="es">Spain</option>
-                        <option value="us">United States</option>
-                    </select>
-                </h1>
-            <div class="row justify-content-around">
-                <div id="name" class="col-sm-12 col-md-5 rounded-lg">
-                    <h2>Search name</h2>
-                    <form class="input-group form-name my-3">
-                        <input type="text" id="nameInput" class="form-control" placeholder="Search name" aria-describedby="button-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-light btn-outline-secondary" type="submit" id="button-addon2">Search</button>
-                        </div>
-                    </form>
-
-                    <div class="display-date">
-                        <p class="name">Name</p>
-                        <p class="date">Date</p>
-                        <p class="other-names">Other names</p>
-                    </div>
-    
-                    <!-- <div class="display-date text-left">
-                        <p>Search on a name and I will tell you what date that name has nameday, and also if there are any other names that has a nameday that day</p>
-                    </div> -->
-                </div>
-        
-                <div id="date" class="col-sm-12 col-md-5 rounded-lg mt-4 mt-md-0">
-                    <h2>Search date</h2>
-                    <form class="input-group form-date my-3">
-                        <input type="date" id="dateInput" class="form-control" aria-describedby="button-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-light btn-outline-secondary" type="submit" id="button-addon2">Search</button>
-                        </div>
-                    </form>
-    
-                    <div class="display-name text-left">
-                        <p>Search on a date, and I will tell you what names has nameday that day</p>
-                    </div>
-                </div>
+    <header class="bg-secondary">
+        <div class="container d-lg-flex text-center p-3 p-md-4 mb-2">
+            <div class="header-left d-md-flex">
+                <h1 class="mb-2 mr-3">Namedays</h1>
+                <select class="country text-center mr-3 mb-4">
+                    <option value="" disabled selected>Country</option>
+                    <option value="se">Sweden</option>
+                    <option value="at">Austria</option>
+                    <option value="hr">Croatia</option>
+                    <option value="cz">Czech Republic</option>
+                    <option value="dk">Denmark</option>
+                    <option value="fi">Finland</option>
+                    <option value="fr">France</option>
+                    <option value="de">Germany</option>
+                    <option value="hu">Hungary</option>
+                    <option value="it">Italy</option>
+                    <option value="pl">Poland</option>
+                    <option value="sk">Slovakia</option>
+                    <option value="es">Spain</option>
+                    <option value="us">United States</option>
+                </select>
+                <select class="timezones text-center mb-4">
+                    <option value="" disabled selected>Timezone</option>
+                </select>
+            </div>
+            <div class="header-right day-buttons d-flex justify-content-around align-items-center">
+                <button type="button" class="btn btn-light" id="yesterday">Yesterday</button>
+                <button type="button" class="btn btn-light" id="today">Today</button>
+                <button type="button" class="btn btn-light" id="tomorrow">Tomorrow</button>
             </div>
         </div>
+    </header>
+    <div class="container m-auto text-center">
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <form class="input-group form-name my-3">
+                    <input type="text" id="nameInput" class="form-control" placeholder="Search name">
+                    <div class="input-group-append">
+                        <button class="btn btn-light btn-outline-secondary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <form class="input-group form-date my-3">
+                    <input type="date" id="dateInput" class="form-control">
+                    <div class="input-group-append">
+                        <button class="btn btn-light btn-outline-secondary" type="submit">Search</button>
+                    </div>
+                </form>
+            </>
+
+        </div>        
+        
+        <div class="row display justify-content-around w-75 mx-auto mt-4">
+        </div>
+    </div>
 
 
     <script src="src/fetch.js"></script>
