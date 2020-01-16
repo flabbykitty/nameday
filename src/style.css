@@ -13,6 +13,11 @@ select {
     background-color: transparent;
     color: white;
     padding-bottom: 0.1rem;
+    text-align-last: center;
+}
+
+option {
+    color: black;
 }
 
 h1 {
