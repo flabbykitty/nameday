@@ -9,12 +9,22 @@
  */
 
 
+/**
+ * Global variables
+ */
+
+
 let searchName = document.querySelector(".form-name");
 let searchDate = document.querySelector(".form-date");
 let searchDay = document.querySelector(".day-buttons");
 
 
-// Add options of timezones to select.
+/**
+ * Functions 
+ */
+
+
+// Add options of timezones to select tag.
 const renderListOfTimezones = async (data) => {
     let select = document.querySelector(".timezones");
     data.forEach(zone => {
@@ -22,7 +32,7 @@ const renderListOfTimezones = async (data) => {
     });
 };
 
-
+// Check if country and timezone is chosen
 const checkCountryAndTimezone = (country, timezone) => {
     if(!country || !timezone) {
         document.querySelector(".display").innerHTML = `
@@ -46,7 +56,7 @@ const displayResult = (day, month, name, names) => {
 
     if(name) {
         if(!day) {
-            div.innerHTML += `<p class="name">Sorry, ${name} does not have a nameday</p>`
+            div.innerHTML += `<div class="alert alert-warning">Sorry, ${name} does not have a nameday</div>`
         } else {
             div.innerHTML += `<p class="name">${name}</p>`;
         }
@@ -59,7 +69,7 @@ const displayResult = (day, month, name, names) => {
 }
 
 
-
+// Handle the results of searching on a name
 const renderDateOfName = (data, name, country) => {
     document.querySelector(".display").innerHTML = "";
 
@@ -97,20 +107,22 @@ const renderDateOfName = (data, name, country) => {
 
     if(date) {
         let names = "";
-            // If there are more then one name
+        // If there are more then one name
         if(date[0]) {
             // Get the names that has the same nameday
             date.forEach(result => {
                 getName(result.month, result.day, country)
                     .then(data => {
+                        // If there are more than one name on the same nameday
+                        // Get a string of the other names that has the same nameday, without the searched name
                         if(data.data[0].namedays[country].length !== name.length) {
                             names = data.data[0].namedays[country]
                             .split(", ")
                             .filter(item => item !== name)
                             .join(", ");
-
-                            displayResult(result.day, result.month, name, names);
                         }
+
+                        displayResult(result.day, result.month, name, names);
                     })
                     .catch(err => {
                         document.querySelector(".display").innerHTML = `
@@ -125,14 +137,19 @@ const renderDateOfName = (data, name, country) => {
 };
 
 
-
+// Handle the result of searching on a date
 const renderNameOnDate = (data, country) => {
-    document.querySelector(".display").innerHTML = "";
-    displayResult(data.data[0].dates.day, data.data[0].dates.month, data.data[0].namedays[country], null);    
+    if(data.data[0].namedays[country] === "n/a") {
+        document.querySelector(".display").innerHTML = `
+        <div class="alert alert-warning">No one has nameday on this day</div>`;
+    } else {
+        document.querySelector(".display").innerHTML = "";
+        displayResult(data.data[0].dates.day, data.data[0].dates.month, data.data[0].namedays[country], null);    
+    }
 };
 
 
-
+// Handle the result of searching on yesterday/today/tomorrow
 const renderNameOnDay = (data, country) => {
     document.querySelector(".display").innerHTML = "";
     displayResult(data.data[0].dates.day, data.data[0].dates.month, data.data[0].namedays[country], null);
@@ -140,6 +157,12 @@ const renderNameOnDay = (data, country) => {
 
 
 
+/**
+ * Calling functions
+ */
+
+
+// Fetch timezones from json file
 getJSON("src/zone.json")
     .then(data => {
         renderListOfTimezones(data);
@@ -150,6 +173,11 @@ getJSON("src/zone.json")
         select.innerHTML += `<option>Unable to get timezones</option>`
     });
 
+
+
+/**
+ * Event listeners
+ */
 
 
 searchDay.addEventListener("click", e => {
@@ -190,10 +218,8 @@ searchName.addEventListener("submit", e => {
     name = name[0].toUpperCase() + name.slice(1);
 
     if(checkCountryAndTimezone(country, timezone)) {
-        // Fetch from API
         getDate(name, country, timezone)
             .then(data => {
-                // Render the result from the API to HTML
                 renderDateOfName(data, name, country);
             })
             .catch(err => {
@@ -225,10 +251,8 @@ searchDate.addEventListener("submit", e => {
     let day = Number(date[2]);
 
     if(checkCountryAndTimezone(country, timezone)) {
-        // Fetch from API
         getName(month, day, country, timezone)
             .then(data => {
-                // Render the result from the API to HTML
                 renderNameOnDate(data, country);
             })
             .catch(err => {
