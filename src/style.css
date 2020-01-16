@@ -22,31 +22,19 @@ option {
 
 h1 {
     color: white;
+    font-size: 3rem;
 }
 
 .header-left,
 .header-right {
-    /* display: flex; */
     flex-grow: 1;
     align-items: first baseline;
 }
 
-#name, #date {
-    padding: 0.5rem 1rem;
-}
-
-#name {
-    background-color: salmon;
-}
-
-#date {
-    background-color: lightseagreen;
-}
-
 .name {
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
 .date {
-    font-size: 3rem;
+    font-size: 3.5rem;
 }
