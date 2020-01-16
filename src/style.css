@@ -1,0 +1,47 @@
+* {
+    margin: 0,
+    padding 0;
+    box-sizing: border-box;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    border-bottom: dashed 1px white;
+    background-color: transparent;
+    color: white;
+    padding-bottom: 0.1rem;
+}
+
+h1 {
+    color: white;
+}
+
+.header-left,
+.header-right {
+    /* display: flex; */
+    flex-grow: 1;
+    align-items: first baseline;
+}
+
+#name, #date {
+    padding: 0.5rem 1rem;
+}
+
+#name {
+    background-color: salmon;
+}
+
+#date {
+    background-color: lightseagreen;
+}
+
+.name {
+    font-size: 1.5rem;
+}
+
+.date {
+    font-size: 3rem;
+}
