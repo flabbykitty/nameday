@@ -102,16 +102,20 @@ const renderDateOfName = (data, name, country) => {
             // Get the names that has the same nameday
             date.forEach(result => {
                 getName(result.month, result.day, country)
-                .then(data => {
-                    if(data.data[0].namedays[country].length !== name.length) {
-                        names = data.data[0].namedays[country]
-                        .split(", ")
-                        .filter(item => item !== name)
-                        .join(", ");
+                    .then(data => {
+                        if(data.data[0].namedays[country].length !== name.length) {
+                            names = data.data[0].namedays[country]
+                            .split(", ")
+                            .filter(item => item !== name)
+                            .join(", ");
 
-                        displayResult(result.day, result.month, name, names);
-                    }
-                });
+                            displayResult(result.day, result.month, name, names);
+                        }
+                    })
+                    .catch(err => {
+                        document.querySelector(".display").innerHTML = `
+                        <div class="alert alert-danger">Sorry, I'm having trouble getting the names for you. <br> ${err}</div>`;
+                    });
             });
         // If there is only one name
         } else {
@@ -137,12 +141,14 @@ const renderNameOnDay = (data, country) => {
 
 
 getJSON("src/zone.json")
-.then(data => {
-    renderListOfTimezones(data);
-})
-.catch(err => {
-    alert(`Unable to fetch timezones, ${err}`);
-});
+    .then(data => {
+        renderListOfTimezones(data);
+    })
+    .catch((err) => {
+        console.error(err);
+        let select = document.querySelector(".timezones");
+        select.innerHTML += `<option>Unable to get timezones</option>`
+    });
 
 
 
@@ -153,9 +159,13 @@ searchDay.addEventListener("click", e => {
 
     if(checkCountryAndTimezone(country, timezone)) {
         getNameOnDay(day, country, timezone)
-        .then(data => {
-            renderNameOnDay(data, country);
-        });
+            .then(data => {
+                renderNameOnDay(data, country);
+            })
+            .catch(err => {
+                document.querySelector(".display").innerHTML = `
+                <div class="alert alert-danger">Sorry, I'm having trouble getting the names for you. <br> ${err}</div>`;
+            });
     }
 });
 
@@ -181,10 +191,14 @@ searchName.addEventListener("submit", e => {
     if(checkCountryAndTimezone(country, timezone)) {
         // Fetch from API
         getDate(name, country, timezone)
-        .then(data => {
-            // Render the result from the API to HTML
-            renderDateOfName(data, name, country);
-        });
+            .then(data => {
+                // Render the result from the API to HTML
+                renderDateOfName(data, name, country);
+            })
+            .catch(err => {
+                document.querySelector(".display").innerHTML = `
+                <div class="alert alert-danger">Sorry, I'm having trouble getting the date for you. <br> ${err}</div>`;
+            });
     }
 });
 
@@ -211,9 +225,13 @@ searchDate.addEventListener("submit", e => {
     if(checkCountryAndTimezone(country, timezone)) {
         // Fetch from API
         getName(month, day, country, timezone)
-        .then(data => {
-            // Render the result from the API to HTML
-            renderNameOnDate(data, country);
-        });
+            .then(data => {
+                // Render the result from the API to HTML
+                renderNameOnDate(data, country);
+            })
+            .catch(err => {
+                document.querySelector(".display").innerHTML = `
+                <div class="alert alert-danger">Sorry, I'm having trouble getting the names for you. <br> ${err}</div>`;
+            });
     }
 });
