@@ -168,6 +168,13 @@ searchName.addEventListener("submit", e => {
     let country = document.querySelector(".country").value;
     
     let name = e.target.nameInput.value;
+
+    if(!name) {
+        document.querySelector(".display").innerHTML = `
+        <div class="alert alert-warning">Please enter a name.</div>`;
+        return;
+    }
+
     name = name.toLowerCase().trim();
     name = name[0].toUpperCase() + name.slice(1);
 
@@ -190,6 +197,13 @@ searchDate.addEventListener("submit", e => {
     let country = document.querySelector(".country").value;
     
     let date = e.target.dateInput.value;
+
+    if(!date) {
+        document.querySelector(".display").innerHTML = `
+        <div class="alert alert-warning">Please choose a date.</div>`;
+        return;
+    }
+
     date = date.split("-");
     let month = Number(date[1]);
     let day = Number(date[2]);
